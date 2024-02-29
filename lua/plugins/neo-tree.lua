@@ -7,6 +7,17 @@ return {
     "MunifTanjim/nui.nvim",
   },
   config = function()
-    vim.keymap.set('n', '<leader>n', ':Neotree filesystem toggle left <CR>')
-  end
+    require("neo-tree").setup({
+      close_if_last_window = true,
+      event_handlers = {
+        {
+          event = "file_opened",
+          handler = function(file_path)
+            require("neo-tree.command").execute({ action = "close" })
+          end,
+        },
+      },
+    })
+    vim.keymap.set("n", "<leader>n", ":Neotree filesystem toggle left <CR>")
+  end,
 }
